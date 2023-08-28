@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>TOV</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/v-mask/dist/v-mask.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="icon" href="" sizes="32x32" />
+    <link rel="icon" href="https://www.tovbrasil.com.br/favicon.ico" sizes="192x192" />
+    <link rel="apple-touch-icon-precomposed" href="https://www.tovbrasil.com.br/favicon.ico" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="TOV" />
+    <meta property="og:description" content="Estatísticas do Poder Judiciário" />
+    <meta property="og:url" content="https://mapas.stg.cloud.cnj.jus.br/" />
+    <meta property="og:site_name" content="CNJ - Painel Estatítica" />
+    <meta property="og:image" content="https://www.tovbrasil.com.br/favicon.ico">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:description" content="Estatísticas do Poder Judiciário" />
+    <meta name="twitter:title" content="CNJ - Painel Estatítica" />
+    <meta name="twitter:image" content="https://www.tovbrasil.com.br/favicon.ico" />
+    <meta charset="utf-8">
+
+    <style>
+        .v-btn__content {
+
+            letter-spacing: 2px;
+        }
+
+        .card-modal-title {
+            width: 550px;
+            margin: 0px auto;
+            text-align: center;
+            background-color: #1565C0;
+            z-index: 101;
+        }
+    </style>
+
+</head>
+
+<body style="background-color:#e1e1e1;">
+
+    <div id="app" style="background-color:#e1e1e1;display: none;">
+
+
+        <v-app id="inspire" style="background-color:#e1e1e1" dark>
+
+            <v-app-bar app clipped-left dark color="#1565C0">
+
+                <v-row justify-space-between>
+                    
+                    <h4>
+                        <v-icon class="text-h5" style="margin-right: 5px;margin-bottom: 5px;">mdi-candle</v-icon> 
+                        Oficina de oração e vida</h4> 
+                    <!-- <v-col>
+
+                        <img src="img/marca-cnj.png" width="135" height="auto" style="margin-top:10px;" />
+                    </v-col>
+
+                    <v-col class="text-center text-h4 pt-5">
+
+                    </v-col>
+
+                    <v-col>
+                        <div style="padding: 5px 20px ">                            
+                            <img src="img/pnud-logo.png" width="90" height="auto" style="float:right;" />
+                        </div>
+                    </v-col> -->
+
+                </v-row>
+
+            </v-app-bar>
+
+            <v-main>
+                <v-container fluid>
+                    <v-main class="px-5 py-2">
+                        <v-row>
+                            
+                            <v-col cols="12" >
+                                <h3>O que são os TOV?</h3> <br> 
+                                <h5 style="color:  #37474F;text-align: justify;">                                    
+                                    As Oficinas de Oração e Vida são uma nova forma de EVANGELIZAÇÃO. Mais VIVA e com uma visão mais positiva do que sempre se mostrou. É uma apresentação mais vibrante e ativa de JESUS que possui uma maior ADAPTAÇÃO às necessidades da SOCIEDADE ATUAL e ao que realmente as pessoas necessitam.
+                                </h5>
+                            </v-col>
+                            
+                            <v-col cols="12" >
+                                <v-card class="elevation-2" style="background-color:#fff;" >
+                                    <v-toolbar  color="#1565C0" dark>
+                                        <v-toolbar-title class="text-h5" >
+                                            <v-icon class="text-h4" style="margin-right: 5px;margin-bottom: 5px;">mdi-candle</v-icon>
+                                            Cadastro 
+                                        </v-toolbar-title>
+                                    </v-toolbar>
+                                    <v-card-text>
+        
+                                        <v-text-field color="#1565C0" v-mask="'###.###.###-##'" v-model="cpf" prepend-icon="mdi-dock-top" 
+                                            name="user" label="Nome" placeholder="Nome" autocomplete="off"
+                                            @keydown.enter="entrar" autofocus ></v-text-field>
+
+                                        <v-text-field color="#1565C0" v-mask="'###.###.###-##'" v-model="cpf" prepend-icon="mdi-dock-top" 
+                                            name="user" label="Telefone" placeholder="Telefone" autocomplete="off"
+                                            @keydown.enter="entrar" autofocus ></v-text-field>    
+        
+                                    </v-card-text>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+        
+                                        <v-btn @click="entrar" class="text-h7" dark style="margin:10px;background-color: #1565C0;text-transform:none;letter-spacing:8px">        
+                                            Cadastrar TOV Jovens        
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-col>
+                            <v-col cols="1"></v-col>
+                        </v-row>                      
+                        
+
+
+                    </v-main>
+                </v-container>
+            </v-main>
+            <v-footer app inset color="#1565C0" style="padding: 15px;">
+            </v-footer>
+        </v-app>
+
+        <v-dialog v-model="alerta.exibir" persistent max-width="550" style="height:125px">
+            <v-toolbar  color="#1565C0" dark>
+                <v-toolbar-title class="text-h5" >
+                    <v-icon class="text-h4" style="margin-right: 5px;margin-bottom: 5px;">mdi-candle</v-icon>
+                    Obrigado pelo cadastro   
+                </v-toolbar-title>
+            </v-toolbar>      
+            <v-card style="height: 125px ">  
+
+                <v-card-title>
+                    Entraremos em contato          
+                </v-card-title>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn style="background-color: #1565C0 ; color: #fff;" @click="alerta.exibir = false">
+                        Fechar
+                    </v-btn>
+                </v-card-actions>
+
+            </v-card>
+
+        </v-dialog>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+    <script>
+
+        const validaCPF = (cpf) => {
+            cpf = cpf.replace(/\D/g, '');
+            if (cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+            var result = true;
+            [9, 10].forEach(function (j) {
+                var soma = 0, r;
+                cpf.split(/(?=)/).splice(0, j).forEach(function (e, i) {
+                    soma += parseInt(e) * ((j + 2) - (i + 1));
+                });
+                r = soma % 11;
+                r = (r < 2) ? 0 : 11 - r;
+                if (r != cpf.substring(j, j + 1)) result = false;
+            });
+            return result;
+        }
+
+        Vue.use(VueMask.VueMaskPlugin);        
+
+        const app = new Vue({
+
+            el: '#app',
+            vuetify: new Vuetify(),
+
+            mounted() {
+                document.getElementById("app").style.display = "block";
+            },
+
+            data: {
+                cpf: "",
+                alerta: {
+                    exibir: false,
+                    msg: ""
+                }
+            },
+
+            methods: {
+                entrar() {
+
+                    const cpf = this.cpf.replace(/[^\d]/g, "");
+
+                    if (cpf == "") {
+                        this.alerta = {
+                            exibir: true,
+                            msg: "Campo CPF vazio"
+                        }
+                        return;
+                    }
+
+                    if (cpf.length < 11) {
+                        this.alerta = {
+                            exibir: true,
+                            msg: "Campo CPF deve conter 11 dígitos"
+                        }
+                        return;
+                    }
+
+                    if (!validaCPF(cpf)) {
+                        this.alerta = {
+                            exibir: true,
+                            msg: "Número de CPF inválido"
+                        }
+                        return;
+                    }else{
+                    	sessionStorage.setItem('cpf', cpf);	
+                    	sessionStorage.setItem('code', '');
+                    }
+                    //window.location = `https://sso.stg.cloud.pje.jus.br/auth/realms/pje/protocol/openid-connect/auth?login_hint=${cpf}&response_mode=query&response_type=code&client_id=modulo-produtividade-mensal&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Findex%2Ehtml&scope=openid`;
+                    window.location = `https://sso.stg.cloud.pje.jus.br/auth/realms/pje/protocol/openid-connect/auth?login_hint=${cpf}&response_mode=query&response_type=code&client_id=modulo-produtividade-mensal&redirect_uri=https%3A%2F%2Fdatajudbi.stg.cloud.cnj.jus.br%2Findex%2Ehtml&scope=openid`;
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>
